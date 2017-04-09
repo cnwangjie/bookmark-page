@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <title><%= cate %> | Bookmarks</title>
+  <link rel="shortcut icon" type="image/x-icon" href="https://assets.simplecast.com/favicon.ico" />
+  <link rel="stylesheet" href="/static/css/mdui.min.css"></link>
+  <link rel="stylesheet" href="/static/css/style.css"></link>
+</head>
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink">
+  <header class="mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-theme">
+      <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#main-drawer'}"><i class="mdui-icon material-icons">&#xe5d2;</i></span>
+      <a href="./" class="mdui-typo-headline mdui-hidden-xs">Bookmarks</a>
+      <div class="mdui-toolbar-spacer"></div>
+      <div class="mdui-textfield mdui-textfield-expandable mdui-float-right appbar-textfield">
+        <button class="mdui-textfield-icon mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">&#xe8b6;</i></button>
+        <input id="search-form" class="mdui-textfield-input" type="text" placeholder="Search"/>
+        <button class="mdui-textfield-close mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">&#xe5cd;</i></button>
+      </div>
+      <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-dialog="{target: '#i18n'}"><i class="mdui-icon material-icons">&#xe894;</i></span>
+      <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-menu="{target: '#header-menu', fixed: true}"><i class="mdui-icon material-icons">&#xe5d4;</i></span>
+      <ul class="mdui-menu" id="header-menu">
+        <li class="mdui-menu-item">
+          <a href="#" class="mdui-ripple">Toolkit</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="#" target="_blank" class="mdui-ripple">About</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="#" target="_blank" class="mdui-ripple">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="mdui-dialog" id="i18n">
+    <div class="mdui-dialog-title">Change Language</div>
+    <div class="mdui-dialog-content">
+      <ul class="mdui-list">
+        <% langs.forEach(function(l) { %>
+        <li class="mdui-list-item mdui-ripple"><a href="/<%= l.code %>/<%= cate %>"><%= l.name %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close>cancel</button>
+    </div>
+  </div>
+
+
+  <div class="mdui-drawer" id="main-drawer">
+    <div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
+      <% for (let c in cates) { %>
+      <div class="mdui-collapse-item <% if (cates[c].name == cate) {%>mdui-list-item-active<% } %>" onclick="window.location='/<%= cates[c].name %>'">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon"></i>
+          <div class="mdui-list-item-content"><%= cates[c].name %></div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+
+  <div class="mdui-container main">
+    <h1><%= cate %></h1>
+    <p class="description"><%= description %></p>
+    <% if (typeof items == 'object') { %>
+    <div class="mdui-row">
+        <% items.forEach(function(item) { %>
+        <div class="mdui-col-sm-6 mdui-col-md-4 mdui-col-lg-3">
+          <div class="mdui-card item">
+            <div class="mdui-card-header">
+              <img class="mdui-card-header-avatar" src="<%= item.icon %>"/>
+              <div class="mdui-card-header-title"><%= item.name %></div>
+              <div class="mdui-card-header-subtitle"><%= item.description %></div>
+            </div>
+            <a href="<%= item.link %>" target="_blank"></a>
+          </div>
+        </div>
+        <% }) %>
+    </div>
+    <% } else { %>
+    <div>
+        No result.
+    </div>
+    <% } %>
+  </div>
+  <script src="/static/js/mdui.min.js"></script>
+  <script src="/static/js/script.js"></script>
+</body>
