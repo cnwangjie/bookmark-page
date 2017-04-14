@@ -14,11 +14,15 @@ app.set('view engine', 'html')
 app.use(cookieParser())
 // let data = JSON.parse(fs.readFileSync('./bm.json'))
 // let i18n = JSON.parse(fs.readFileSync('./i18n.json'))
-let cates = {}
+let cates = []
+let des = {}
 Cate.find((err, re) => {
     for (let t of re) {
-        cates[t.name] = t
+        des[t.name] = t
     }
+    cates = re.sort((a, b) => {
+        return b.weight - a.weight
+    })
     console.log('cates loaded!')
 })
 
@@ -26,7 +30,7 @@ let render = function(req, res, lang, cate = 'common') {
     Item.find({cate: cate}, (err, items) => {
         res.render('content.ejs', {
             cate: cate,
-            description: cates[cate].description,
+            description: des[cate].description,
             cates: cates,
             items: items,
             langs: [

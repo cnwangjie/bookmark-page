@@ -41,6 +41,7 @@ cate.map((i) => {
                 name: i.name,
                 sum: i.sum,
                 description: i.description ? i.description : '',
+                weight: i.weight,
             })
         }
     })

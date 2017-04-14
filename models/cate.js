@@ -3,6 +3,7 @@ var CateSchema = new mongoose.Schema({
     name: String,
     description: String,
     sum: Number,
+    weight: Number,
 })
 
 CateSchema.statics = {

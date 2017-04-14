@@ -7,7 +7,7 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <title><%= cate %> | Bookmarks</title>
-  <link rel="shortcut icon" type="image/x-icon" href="https://assets.simplecast.com/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="stylesheet" href="/static/css/mdui.min.css"></link>
   <link rel="stylesheet" href="/static/css/style.css"></link>
 </head>
@@ -55,14 +55,17 @@
 
   <div class="mdui-drawer" id="main-drawer">
     <div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
-      <% for (let c in cates) { %>
-      <div class="mdui-collapse-item <% if (cates[c].name == cate) {%>mdui-list-item-active<% } %>" onclick="window.location='/<%= cates[c].name %>'">
+      <% cates.forEach((a) => { %>
+      <div class="mdui-collapse-item <% if (a.name == cate) {%>mdui-list-item-active<% } %>" onclick="window.location='/<%= a.name %>'">
         <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
           <i class="mdui-list-item-icon"></i>
-          <div class="mdui-list-item-content"><%= cates[c].name %></div>
+          <div class="mdui-list-item-content"><%= a.name %> (<%= a.sum %>)</div>
+          <!-- <div class="mdui-chip">
+            <span class="mdui-chip-title"><%= a.sum %></span>
+          </div> -->
         </div>
       </div>
-      <% } %>
+      <% }) %>
     </div>
   </div>
 
@@ -80,7 +83,7 @@
               <div class="mdui-card-header-title"><%= item.name %></div>
               <div class="mdui-card-header-subtitle"><%= item.description %></div>
             </div>
-            <a href="<%= item.link %>" target="_blank"></a>
+            <a href="<%= item.link %>" title="<%= item.description %>" target="_blank"></a>
           </div>
         </div>
         <% }) %>
